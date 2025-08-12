@@ -46,7 +46,7 @@ class JobTag(models.Model):
     class Meta:
         verbose_name = "JobTag"
         verbose_name_plural = "JobTags"
-        unique_together = ('category','title')
+        unique_together = ('category', 'title')
     
     def __str__(self):
         return f"{self.title}-{self.category.title}"
@@ -114,11 +114,11 @@ class Job(models.Model):
 
 # a model for job images
 
-
 class JobImage(models.Model):
     update_user = models.ForeignKey(User, related_name="image_user", on_delete=models.CASCADE)
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
+    slug = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
     job = models.ForeignKey(Job, verbose_name=_(""), on_delete=models.CASCADE)
     files = models.FileField(blank=True, null=True, upload_to="jobs/files")
 
