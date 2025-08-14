@@ -23,6 +23,7 @@ urlpatterns = [
     path("users/", include("kazi.users.urls", namespace="users")),
     path("accounts/", include("allauth.urls")),
     # Your stuff: custom urls includes go here
+    
     # ...
     # Media files
     *static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT),
@@ -43,6 +44,7 @@ urlpatterns += [
         SpectacularSwaggerView.as_view(url_name="api-schema"),
         name="api-docs",
     ),
+    path("api/v1/jobs/", include("kazi.Jobs.urls")),
 ]
 
 if settings.DEBUG:

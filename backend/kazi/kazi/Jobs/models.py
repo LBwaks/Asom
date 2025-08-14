@@ -29,6 +29,9 @@ class JobCategories(models.Model):
     def __str__(self):
         return self.title
     
+    def get_absolute_url(self):
+        return reverse_lazy("Jobs:job-category-detail", kwargs={"slug": self.slug})
+    
 # model for categories_tags
 
 
@@ -90,9 +93,9 @@ class Job(models.Model):
     city = models.CharField(_("city"), max_length=30)
     location = models.CharField(_("location"), max_length=30)
     address = models.CharField(_("Address"), max_length=30)
-    latitude = models.DecimalField(max_digits=10,decimal_places=6,null=True,blank=True)
-    longitude = models.DecimalField(max_digits=10,decimal_places=6,null=True,blank=True)
-    price = models.DecimalField(max_digits=10,decimal_places=2,null=True,blank=True)
+    latitude = models.DecimalField(max_digits=10, decimal_places=6,null=True,blank=True)
+    longitude = models.DecimalField(max_digits=10, decimal_places=6,null=True,blank=True)
+    price = models.DecimalField(max_digits=10, decimal_places=2, null=True,blank=True)
     is_published = models.BooleanField(default=False)
     is_featured = models.BooleanField(default=False)
     ind_active = models.BooleanField(default=True) 
@@ -105,8 +108,8 @@ class Job(models.Model):
     def __str__(self):
         return self.title
     
-    # def get_absolute_url(self):
-    #     return reverse_lazy("Jobs:job-detail", kwargs={"slug": self.slug})
+    def get_absolute_url(self):
+        return reverse_lazy("Jobs:job-detail", kwargs={"slug": self.slug})
     
 
 
@@ -119,7 +122,7 @@ class JobImage(models.Model):
     create_date = models.DateTimeField(auto_now_add=True)
     update_date = models.DateTimeField(auto_now=True)
     slug = models.UUIDField(unique=True, default=uuid.uuid4, editable=False)
-    job = models.ForeignKey(Job, verbose_name=_(""), on_delete=models.CASCADE)
+    job = models.ForeignKey(Job, verbose_name=_(""), related_name="job_images", on_delete=models.CASCADE)
     files = models.FileField(blank=True, null=True, upload_to="jobs/files")
 
     class Meta:
